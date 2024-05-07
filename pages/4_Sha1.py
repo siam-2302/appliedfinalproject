@@ -22,7 +22,7 @@ def hash_text(text):
     output.append(f"{hash_text} {text}")
     return output
     
-st.title("Text Hasher")
+st.title("Sha1")
 
 text_input = st.text_input("Enter text:")
 if st.button("Submit"):
