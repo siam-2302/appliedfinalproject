@@ -29,7 +29,6 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
     return result, print_output
 
 def main():
-    st.title("Ceasar Cipher")
 
     text_input = st.text_input("Enter text:")
     keys_input = st.text_input("Enter shift keys separated by space:")

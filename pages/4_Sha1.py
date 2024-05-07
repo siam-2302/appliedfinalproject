@@ -1,6 +1,8 @@
 import streamlit as st
 import hashlib
 
+st.header("Sha1")
+
 def hash_text(text):
     space_hash = '5C1CE938EC4B836703C845A1D8DB57348758F283'
     hashed_chars = set()
@@ -22,7 +24,6 @@ def hash_text(text):
     output.append(f"{hash_text} {text}")
     return output
     
-st.title("Sha1")
 
 text_input = st.text_input("Enter text:")
 if st.button("Submit"):
