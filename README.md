@@ -1,7 +1,13 @@
-# Welcome to streamlit
+# Welcome to our Final Project in Applied Cryptoraphy
 
-This is the app you get when you run `streamlit hello`, extracted as its own app.
+This is an application based on encrypting and decrypting
+Here you can find Xor Cipher, Ceasar Cipher, Primitive Root, Block Cipher and Sha1
 
-Edit [Hello.py](./Hello.py) to customize this app to your heart's desire. ❤️
+by:
+Christian Siam Busadr
+Jerome Llaban
+Mae Julien Arbo Mata
+BSCS 3A
 
-Check it out on [Streamlit Community Cloud](https://st-hello-app.streamlit.app/)
+
+Check it out on [Streamlit](https://bscs3afinalapplied.streamlit.app/)
