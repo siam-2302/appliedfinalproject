@@ -1,6 +1,7 @@
 import streamlit as st
 import hashlib
 
+
 st.header("Sha1")
 
 def hash_text(text):
