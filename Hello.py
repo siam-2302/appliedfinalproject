@@ -25,7 +25,7 @@ def run():
     )
 
     st.write("# Welcome our Repository/Final Project! 👋")
-    st.write("BY: CHRISTIAN SIAM B BUSADRE, Jerome Llaban and Mae Julienn Arbo Mata ")
+    st.write("BY: Christian Siam Busadre, Jerome Llaban and Mae Julienn Arbo Mata ")
 
 
     st.markdown(
