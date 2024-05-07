@@ -24,25 +24,18 @@ def run():
         page_icon="👋",
     )
 
-    st.write("# Welcome to Streamlit! 👋")
+    st.write("# Welcome our Repository/Final Project! 👋")
+    st.write("BY: CHRISTIAN SIAM B BUSADRE, Jerome Llaban and Mae Julienn Arbo Mata ")
 
-    st.sidebar.success("Select a demo above.")
 
     st.markdown(
         """
-        Streamlit is an open-source app framework built specifically for
-        Machine Learning and Data Science projects.
-        **👈 Select a demo from the sidebar** to see some examples
-        of what Streamlit can do!
-        ### Want to learn more?
-        - Check out [streamlit.io](https://streamlit.io)
-        - Jump into our [documentation](https://docs.streamlit.io)
-        - Ask a question in our [community
-          forums](https://discuss.streamlit.io)
-        ### See more complex demos
-        - Use a neural net to [analyze the Udacity Self-driving Car Image
-          Dataset](https://github.com/streamlit/demo-self-driving)
-        - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
+    Here you can select from a variety of ciphers:
+    - [XOR Cipher]: It is used with a key when encrypting and decrypting a series of plaintext bytes.
+    - [Caesar Cipher]: Simple encryption method wherer each letter in the plaintext is shifter a certain number  of places down the alphabet.
+    - [Primitive Root]: A mathematical concept used in certain cryptographic algorithms.
+    - [Block Cipher]: A symmetric key cryptographic algorithm operating on fixed-length groups of bits, called blocks.
+    - [Sha1]: Converting text input to hash value
     """
     )
 
