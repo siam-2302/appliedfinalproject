@@ -6,9 +6,6 @@ st.header("XOR Cipher")
 plaintext = bytes(st.text_input("Plain Text:").encode())
 key_input = st.text_input("Key:")
 
-# Use hashlib to hash the key input
-key_hash = hashlib.sha256(key_input.encode()).digest()
-
 def xor_encrypt(plaintext, key):
     """Encrypts plaintext using XOR cipher with the given key."""
     ciphertext = bytearray()
@@ -26,7 +23,9 @@ if st.button("Submit"):
     if not key_input:
         st.error("Invalid key")
     else:
-        # Use the hashed key
+        # Use hashlib to hash the key input
+        key_hash = hashlib.sha256(key_input.encode()).digest()
+
         if not(1 < len(plaintext) >= len(key_hash) >= 1):
             st.write("Plaintext length should be equal or greater than the length of key")
         elif not plaintext != key_hash: 
