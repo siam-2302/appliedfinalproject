@@ -12,6 +12,7 @@ def run():
 
     st.title("Welcome to our Cryptographic Algorithms Repository! 👋")
     st.write("BY: Christian Siam Busadre, Jerome Llaban, and Mae Julienn Arbo Mata")
+    st.write("BSCS 3A")
 
     st.markdown(
         """
@@ -24,7 +25,7 @@ def run():
         """
     )
 
-    st.header("Cryptographic Algorithms")
+    st.header("Cryptographic Application")
 
     with st.expander("XOR Cipher"):
         st.write("""
