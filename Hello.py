@@ -25,8 +25,6 @@ def run():
         """
     )
 
-    st.header("Cryptographic Application")
-
     with st.expander("XOR Cipher"):
         st.write("""
         **Description:** The XOR cipher is a symmetric encryption algorithm that works by performing an exclusive OR (XOR) operation between the plaintext and a key.
