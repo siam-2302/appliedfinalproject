@@ -1,4 +1,5 @@
 import streamlit as st
+import hashlib
 
 st.header("Primitive Root")
 
