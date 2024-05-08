@@ -14,16 +14,6 @@ def run():
     st.write("BY: Christian Siam Busadre, Jerome Llaban, and Mae Julienn Arbo Mata")
     st.write("BSCS 3A")
 
-    st.markdown(
-        """
-        Here you can select from a variety of cryptographic algorithms:
-        - **[XOR Cipher](#xor-cipher):** A symmetric encryption algorithm using bitwise XOR operation.
-        - **[Caesar Cipher](#caesar-cipher):** A simple encryption method shifting each letter by a fixed number.
-        - **[Primitive Root](#primitive-root):** A mathematical concept used in certain cryptographic algorithms.
-        - **[Block Cipher](#block-cipher):** A symmetric key cryptographic algorithm operating on fixed-length blocks.
-        - **[SHA-1](#sha-1):** A cryptographic hash function producing a 160-bit hash value.
-        """
-    )
 
     with st.expander("XOR Cipher"):
         st.write("""
