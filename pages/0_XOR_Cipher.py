@@ -2,39 +2,38 @@ import streamlit as st
 
 st.header("XOR Cipher")
 
-plaintext = bytes(st.text_input("Plain Text:").encode())
-key = bytes(st.text_input("Key:").encode())
-
-def xor_encrypt(plaintext, key):
-    """Encrypts plaintext using XOR cipher with the given key, printing bits involved."""
-
+def xor_encrypt_text(plaintext, key):
+    """Encrypts plaintext using XOR cipher with the given key."""
     ciphertext = bytearray()
-    
     for i in range(len(plaintext)):
         ciphertext.append(plaintext[i] ^ key[i % len(key)])
-        st.write(f"Plaintext byte: {plaintext[i]:08b} = {chr(plaintext[i])}")
-        st.write(f"Key byte:       {key [i % len(key)]:08b} = {chr(key[i % len (key)])}")
-        st.write(f"XOR result:     {ciphertext[-1]:08b} = {chr(ciphertext[-1])}")
-        st.write("--------------------")       
+    return ciphertext
 
-    return ciphertext  
-
-def xor_decrypt(ciphertext, key):
+def xor_decrypt_text(ciphertext, key):
     """Decrypts ciphertext using XOR cipher with the given key."""
-    return xor_encrypt(ciphertext, key)
+    return xor_encrypt_text(ciphertext, key)
 
-if st.button("Submit"): 
-    if not key:
-        st.error("Invalid key")
-    else:
-        if not(1 < len(plaintext) >= len(key)>=1):
-            st.write("Plaintext length should be equal or greater than the length of key")
-        elif not plaintext != key: 
-            st.write("Plaintext should not be equal to the key")
-    
-        else: 
-            cipher_text = xor_encrypt(plaintext, key)
-            st.write("Ciphertext:", cipher_text.decode())
-    
-            decryption =  xor_decrypt(cipher_text, key)
-            st.write("Decrypted:", decryption.decode())
+def main():
+    plaintext = st.text_input("Enter Plain Text:")
+    key = st.text_input("Enter Key:")
+
+    if st.button("Encrypt"):
+        if plaintext and key:
+            plaintext_bytes = plaintext.encode()
+            key_bytes = key.encode()
+            encrypted_text = xor_encrypt_text(plaintext_bytes, key_bytes)
+            st.write("Encrypted Text:", encrypted_text.decode())
+        else:
+            st.error("Please enter both plain text and key.")
+
+    if st.button("Decrypt"):
+        if plaintext and key:
+            ciphertext = bytes.fromhex(plaintext)  # Assuming ciphertext is entered in hexadecimal format
+            key_bytes = key.encode()
+            decrypted_text = xor_decrypt_text(ciphertext, key_bytes)
+            st.write("Decrypted Text:", decrypted_text.decode())
+        else:
+            st.error("Please enter both cipher text and key.")
+
+if __name__ == "__main__":
+    main()
