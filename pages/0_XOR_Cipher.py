@@ -1,22 +1,21 @@
 import streamlit as st
+import hashlib
 
 st.header("XOR Cipher")
 
 plaintext = bytes(st.text_input("Plain Text:").encode())
-key = bytes(st.text_input("Key:").encode())
+key_input = st.text_input("Key:")
+
+# Use hashlib to hash the key input
+key_hash = hashlib.sha256(key_input.encode()).digest()
 
 def xor_encrypt(plaintext, key):
-    """Encrypts plaintext using XOR cipher with the given key, printing bits involved."""
-
+    """Encrypts plaintext using XOR cipher with the given key."""
     ciphertext = bytearray()
     
     for i in range(len(plaintext)):
         ciphertext.append(plaintext[i] ^ key[i % len(key)])
-        st.write(f"Plaintext byte: {plaintext[i]:08b} = {chr(plaintext[i])}")
-        st.write(f"Key byte:       {key [i % len(key)]:08b} = {chr(key[i % len (key)])}")
-        st.write(f"XOR result:     {ciphertext[-1]:08b} = {chr(ciphertext[-1])}")
-        st.write("--------------------")       
-
+    
     return ciphertext  
 
 def xor_decrypt(ciphertext, key):
@@ -24,17 +23,18 @@ def xor_decrypt(ciphertext, key):
     return xor_encrypt(ciphertext, key)
 
 if st.button("Submit"): 
-    if not key:
+    if not key_input:
         st.error("Invalid key")
     else:
-        if not(1 < len(plaintext) >= len(key)>=1):
+        # Use the hashed key
+        if not(1 < len(plaintext) >= len(key_hash) >= 1):
             st.write("Plaintext length should be equal or greater than the length of key")
-        elif not plaintext != key: 
+        elif not plaintext != key_hash: 
             st.write("Plaintext should not be equal to the key")
     
         else: 
-            cipher_text = xor_encrypt(plaintext, key)
+            cipher_text = xor_encrypt(plaintext, key_hash)
             st.write("Ciphertext:", cipher_text.decode())
     
-            decryption =  xor_decrypt(cipher_text, key)
+            decryption =  xor_decrypt(cipher_text, key_hash)
             st.write("Decrypted:", decryption.decode())
