@@ -26,7 +26,7 @@ def run():
 
     st.header("Cryptographic Algorithms")
 
-    with st.beta_expander("XOR Cipher"):
+    with st.expander("XOR Cipher"):
         st.write("""
         **Description:** The XOR cipher is a symmetric encryption algorithm that works by performing an exclusive OR (XOR) operation between the plaintext and a key.
         
@@ -45,7 +45,7 @@ def run():
         3. Output the resulting ciphertext.
         """)
 
-    with st.beta_expander("Caesar Cipher"):
+    with st.expander("Caesar Cipher"):
         st.write("""
         **Description:** The Caesar cipher is a simple encryption method where each letter in the plaintext is shifted by a fixed number of places down the alphabet.
         
@@ -55,7 +55,7 @@ def run():
         3. Output the resulting ciphertext.
         """)
 
-    with st.beta_expander("Primitive Root"):
+    with st.expander("Primitive Root"):
         st.write("""
         **Description:** A primitive root is a mathematical concept used in certain cryptographic algorithms, particularly in the context of modular arithmetic.
         
@@ -64,7 +64,7 @@ def run():
         2. Verify if a specific number is a primitive root modulo the given prime.
         """)
 
-    with st.beta_expander("Block Cipher"):
+    with st.expander("Block Cipher"):
         st.write("""
         **Description:** A block cipher is a symmetric key cryptographic algorithm that operates on fixed-length blocks of data.
         
@@ -74,7 +74,7 @@ def run():
         3. Output the resulting ciphertext or plaintext.
         """)
 
-    with st.beta_expander("SHA-1"):
+    with st.expander("SHA-1"):
         st.write("""
         **Description:** SHA-1 (Secure Hash Algorithm 1) is a cryptographic hash function that produces a 160-bit hash value known as a message digest.
         
