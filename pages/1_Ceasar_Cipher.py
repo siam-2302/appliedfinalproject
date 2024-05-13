@@ -12,6 +12,7 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
         A string containing the encrypted or decrypted text.
     """
     result = ""
+    transformations = []
     
     if len(shift_keys) <= 1 or len(shift_keys) > len(text):
         raise ValueError("Invalid shift keys length")
@@ -28,9 +29,11 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
                 new_ascii += 94
                 
             result += chr(new_ascii)
+            transformations.append((char, shift_key, chr(new_ascii)))
         else:
             result += char
-    return result
+            transformations.append((char, "", char))
+    return result, transformations
 
 def hash_text(text):
     """
@@ -53,11 +56,16 @@ if submit_button:
     try:
         shift_keys = [int(key) for key in shift_keys_input.split()]
 
-        encrypted_text = encrypt_decrypt(text_input, shift_keys, False)
-        decrypted_text = encrypt_decrypt(encrypted_text, shift_keys, True)
+        encrypted_text, enc_transformations = encrypt_decrypt(text_input, shift_keys, False)
+        decrypted_text, dec_transformations = encrypt_decrypt(encrypted_text, shift_keys, True)
 
         st.write("Encrypted Text:", encrypted_text)
         st.write("Decrypted Text:", decrypted_text)
+        
+        st.write("**Transformation Details**")
+        st.write("Character | Shift Key | Transformed Character")
+        for i, (char, shift_key, transformed_char) in enumerate(enc_transformations):
+            st.write(f"{i+1}. {char} | {shift_key} | {transformed_char}")
         
         hashed_text = hash_text(text_input)
         st.write("Hash of the input text:", hashed_text)
