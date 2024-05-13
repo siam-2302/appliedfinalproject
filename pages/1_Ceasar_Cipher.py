@@ -12,7 +12,6 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
         A string containing the encrypted or decrypted text.
     """
     result = ""
-    transformations = []
     
     if len(shift_keys) <= 1 or len(shift_keys) > len(text):
         raise ValueError("Invalid shift keys length")
@@ -29,13 +28,11 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
                 new_ascii += 94
                 
             result += chr(new_ascii)
-            transformations.append((char, shift_key, chr(new_ascii)))
         else:
             result += char
-            transformations.append((char, "", char))
-    return result, transformations
+    return result
 
-st.title("Caesar Cipher")
+st.title("Caesar Cipher Encryption and Decryption")
 
 text_input = st.text_input("Enter the text:")
 shift_keys_input = st.text_input("Enter the shift keys separated by space:")
@@ -45,14 +42,8 @@ if submit_button:
     try:
         shift_keys = [int(key) for key in shift_keys_input.split()]
 
-        encrypted_text, enc_transformations = encrypt_decrypt(text_input, shift_keys, False)
-        decrypted_text, dec_transformations = encrypt_decrypt(encrypted_text, shift_keys, True)
-        
-        for i, (char, shift_key, transformed_char) in enumerate(enc_transformations):
-            st.write(f"{i} {char} {shift_key} {transformed_char}")
-        st.write("----------")
-        for i, (char, shift_key, transformed_char) in enumerate(dec_transformations):
-            st.write(f"{i} {char} {shift_key} {transformed_char}")
+        encrypted_text = encrypt_decrypt(text_input, shift_keys, False)
+        decrypted_text = encrypt_decrypt(encrypted_text, shift_keys, True)
         
         st.write("Text:", text_input)
         st.write("Shift keys:", " ".join(str(key) for key in shift_keys))
