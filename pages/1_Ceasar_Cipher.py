@@ -47,9 +47,6 @@ if submit_button:
 
         encrypted_text, enc_transformations = encrypt_decrypt(text_input, shift_keys, False)
         decrypted_text, dec_transformations = encrypt_decrypt(encrypted_text, shift_keys, True)
-
-        st.write("Encrypted Text:", encrypted_text)
-        st.write("Decrypted Text:", decrypted_text)
         
         st.write("**Transformation Details**")
         st.write("Character | Shift Key | Transformed Character")
