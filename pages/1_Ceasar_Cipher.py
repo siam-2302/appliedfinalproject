@@ -9,9 +9,10 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
         shift_keys: A list of integers representing the shift values for each character.
         ifdecrypt: Flag indicating whether to decrypt or encrypt.
     Returns:
-        A string containing the encrypted or decrypted text.
+        A tuple containing the encrypted or decrypted text and the character-by-character transformations.
     """
     result = ""
+    transformations = []
     
     if len(shift_keys) <= 1 or len(shift_keys) > len(text):
         raise ValueError("Invalid shift keys length")
@@ -28,9 +29,11 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
                 new_ascii += 94
                 
             result += chr(new_ascii)
+            transformations.append((i, char, shift_key, chr(new_ascii)))
         else:
             result += char
-    return result
+            transformations.append((i, char, "", char))
+    return result, transformations
 
 st.title("Caesar Cipher Encryption and Decryption")
 
@@ -42,8 +45,19 @@ if submit_button:
     try:
         shift_keys = [int(key) for key in shift_keys_input.split()]
 
-        encrypted_text = encrypt_decrypt(text_input, shift_keys, False)
-        decrypted_text = encrypt_decrypt(encrypted_text, shift_keys, True)
+        encrypted_text, enc_transformations = encrypt_decrypt(text_input, shift_keys, False)
+        decrypted_text, dec_transformations = encrypt_decrypt(encrypted_text, shift_keys, True)
+        
+        st.write("**Transformation Details**")
+        st.write("Encrypt:")
+        st.write("Index | Character | Shift Key | Transformed Character")
+        for i, (index, char, shift_key, transformed_char) in enumerate(enc_transformations):
+            st.write(f"{index} | {char} | {shift_key} | {transformed_char}")
+        
+        st.write("Decrypt:")
+        st.write("Index | Character | Shift Key | Transformed Character")
+        for i, (index, char, shift_key, transformed_char) in enumerate(dec_transformations):
+            st.write(f"{index} | {char} | {shift_key} | {transformed_char}")
         
         st.write("Text:", text_input)
         st.write("Shift keys:", " ".join(str(key) for key in shift_keys))
