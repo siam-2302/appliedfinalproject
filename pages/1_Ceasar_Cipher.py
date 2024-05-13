@@ -35,7 +35,7 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
             transformations.append((char, "", char))
     return result, transformations
 
-st.title("Caesar Cipher Encryption and Decryption")
+st.title("Caesar Cipher")
 
 text_input = st.text_input("Enter the text:")
 shift_keys_input = st.text_input("Enter the shift keys separated by space:")
@@ -48,8 +48,6 @@ if submit_button:
         encrypted_text, enc_transformations = encrypt_decrypt(text_input, shift_keys, False)
         decrypted_text, dec_transformations = encrypt_decrypt(encrypted_text, shift_keys, True)
         
-        st.write("**Transformation Details**")
-        st.write("Character | Shift Key | Transformed Character")
         for i, (char, shift_key, transformed_char) in enumerate(enc_transformations):
             st.write(f"{i} {char} {shift_key} {transformed_char}")
         st.write("----------")
