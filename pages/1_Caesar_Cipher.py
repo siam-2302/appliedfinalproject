@@ -35,7 +35,7 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
             transformations.append((char, "", char))
     return result, transformations
 
-st.title("Ceasar Cipher")
+st.title("Caesar Cipher")
 
 text_input = st.text_input("Enter the text:")
 shift_keys_input = st.text_input("Enter the shift keys separated by space:")
