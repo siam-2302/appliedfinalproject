@@ -35,17 +35,6 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
             transformations.append((char, "", char))
     return result, transformations
 
-def hash_text(text):
-    """
-    Hashes the input text using SHA256 algorithm.
-    Args:
-        text: The text to hash.
-    Returns:
-        A hexadecimal string representing the hash of the input text.
-    """
-    hash_object = hashlib.sha256(text.encode())
-    return hash_object.hexdigest()
-
 st.title("Caesar Cipher Encryption and Decryption")
 
 text_input = st.text_input("Enter the text:")
@@ -70,11 +59,9 @@ if submit_button:
         for i, (char, shift_key, transformed_char) in enumerate(dec_transformations):
             st.write(f"{i} {char} {shift_key} {transformed_char}")
         
-        hashed_text = hash_text(text_input)
         st.write("Text:", text_input)
         st.write("Shift keys:", " ".join(str(key) for key in shift_keys))
         st.write("Cipher:", encrypted_text)
         st.write("Decrypted text:", decrypted_text)
-        st.write("Hash of the input text:", hashed_text)
     except ValueError as e:
         st.error(str(e))
