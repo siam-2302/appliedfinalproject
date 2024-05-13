@@ -65,9 +65,16 @@ if submit_button:
         st.write("**Transformation Details**")
         st.write("Character | Shift Key | Transformed Character")
         for i, (char, shift_key, transformed_char) in enumerate(enc_transformations):
-            st.write(f"{i+1}. {char} | {shift_key} | {transformed_char}")
+            st.write(f"{i} {char} {shift_key} {transformed_char}")
+        st.write("----------")
+        for i, (char, shift_key, transformed_char) in enumerate(dec_transformations):
+            st.write(f"{i} {char} {shift_key} {transformed_char}")
         
         hashed_text = hash_text(text_input)
+        st.write("Text:", text_input)
+        st.write("Shift keys:", " ".join(str(key) for key in shift_keys))
+        st.write("Cipher:", encrypted_text)
+        st.write("Decrypted text:", decrypted_text)
         st.write("Hash of the input text:", hashed_text)
     except ValueError as e:
         st.error(str(e))
