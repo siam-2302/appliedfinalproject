@@ -34,7 +34,7 @@ def run():
         3. Output the resulting ciphertext.
         """)
 
-    with st.expander("Caesar Cipher"):
+    with st.expander("Ceasar Cipher"):
         st.write("""
         **Description:** The Caesar cipher is a simple encryption method where each letter in the plaintext is shifted by a fixed number of places down the alphabet.
         
