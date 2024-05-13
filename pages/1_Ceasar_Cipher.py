@@ -1,29 +1,25 @@
 import streamlit as st
 
-def encrypt_decrypt(text, shift_keys):
+def encrypt_decrypt(text, shift_keys, ifdecrypt):
     """
     Encrypts a text using Caesar Cipher with a list of shift keys.
     Args:
         text: The text to encrypt.
         shift_keys: A list of integers representing the shift values for each character.
+        ifdecrypt: flag if decrypt or encrypt
     Returns:
-        A string containing the encrypted text.
+        A string containing the encrypted text if encrypt and plain text if decrypt
     """
     result = ""
     
     if len(shift_keys) <= 1 or len(shift_keys) > len(text):
         raise ValueError("Invalid shift keys length")
     
-    print(f"Text: {text}")
-    print(f"Shift keys: {shift_keys}")
-
     for i, char in enumerate(text):
         shift_key = shift_keys[i % len(shift_keys)]
         
-        print(f"Character: {char}, Shift key: {shift_key}")
-        
         if 32 <= ord(char) <= 125:
-            new_ascii = ord(char) + shift_key
+            new_ascii = ord(char) + shift_key if not ifdecrypt else ord(char) -shift_key
                 
             while new_ascii > 125:
                 new_ascii -= 94
@@ -33,22 +29,25 @@ def encrypt_decrypt(text, shift_keys):
             result += chr(new_ascii)
         else:
             result += char
-        print(f"Result so far: {result}")
     return result
 
-def main():
-    st.title("Caesar Cipher Encryption")
-    
-    text = st.text_input("Enter text:")
-    shift_keys_input = st.text_input("Enter shift keys (separated by space):")
+st.title("Caesar Cipher Encryption and Decryption")
 
-    if st.button("Submit"):
-        try:
-            shift_keys = [int(key) for key in shift_keys_input.split()]
-            result = encrypt_decrypt(text, shift_keys)
-            st.write("Result:", result)
-        except Exception as e:
-            st.error(f"An error occurred: {e}")
+text_input = st.text_input("Enter the text:")
+shift_keys_input = st.text_input("Enter the shift keys separated by space:")
 
-if __name__ == "__main__":
-    main()
+if st.button("Encrypt"):
+    try:
+        shift_keys = [int(key) for key in shift_keys_input.split()]
+        enc = encrypt_decrypt(text_input, shift_keys, False)
+        st.write("Encrypted Text:", enc)
+    except ValueError as e:
+        st.error(str(e))
+
+if st.button("Decrypt"):
+    try:
+        shift_keys = [int(key) for key in shift_keys_input.split()]
+        dec = encrypt_decrypt(text_input, shift_keys, True)
+        st.write("Decrypted Text:", dec)
+    except ValueError as e:
+        st.error(str(e))
