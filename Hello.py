@@ -10,7 +10,7 @@ def run():
         page_icon="🔒",
     )
 
-    st.title("Welcome to our Cryptographic Algorithms Repository! 👋")
+    st.title("Welcome to our Final Project in Applied Cryptography! 👋")
     st.write("BY: Christian Siam Busadre, Jerome Llaban, and Mae Julienn Arbo Mata")
     st.write("BSCS 3A")
 
