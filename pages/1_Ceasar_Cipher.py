@@ -14,8 +14,13 @@ def encrypt_decrypt(text, shift_keys):
     if len(shift_keys) <= 1 or len(shift_keys) > len(text):
         raise ValueError("Invalid shift keys length")
     
+    print(f"Text: {text}")
+    print(f"Shift keys: {shift_keys}")
+
     for i, char in enumerate(text):
         shift_key = shift_keys[i % len(shift_keys)]
+        
+        print(f"Character: {char}, Shift key: {shift_key}")
         
         if 32 <= ord(char) <= 125:
             new_ascii = ord(char) + shift_key
@@ -28,6 +33,7 @@ def encrypt_decrypt(text, shift_keys):
             result += chr(new_ascii)
         else:
             result += char
+        print(f"Result so far: {result}")
     return result
 
 def main():
