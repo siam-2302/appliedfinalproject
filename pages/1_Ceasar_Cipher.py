@@ -1,14 +1,15 @@
 import streamlit as st
+import hashlib
 
 def encrypt_decrypt(text, shift_keys, ifdecrypt):
     """
-    Encrypts a text using Caesar Cipher with a list of shift keys.
+    Encrypts or decrypts a text using Caesar Cipher with a list of shift keys.
     Args:
-        text: The text to encrypt.
+        text: The text to encrypt or decrypt.
         shift_keys: A list of integers representing the shift values for each character.
-        ifdecrypt: flag if decrypt or encrypt
+        ifdecrypt: Flag indicating whether to decrypt or encrypt.
     Returns:
-        A string containing the encrypted text if encrypt and plain text if decrypt
+        A string containing the encrypted or decrypted text.
     """
     result = ""
     
@@ -19,7 +20,7 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
         shift_key = shift_keys[i % len(shift_keys)]
         
         if 32 <= ord(char) <= 125:
-            new_ascii = ord(char) + shift_key if not ifdecrypt else ord(char) -shift_key
+            new_ascii = ord(char) + shift_key if not ifdecrypt else ord(char) - shift_key
                 
             while new_ascii > 125:
                 new_ascii -= 94
@@ -31,23 +32,34 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
             result += char
     return result
 
+def hash_text(text):
+    """
+    Hashes the input text using SHA256 algorithm.
+    Args:
+        text: The text to hash.
+    Returns:
+        A hexadecimal string representing the hash of the input text.
+    """
+    hash_object = hashlib.sha256(text.encode())
+    return hash_object.hexdigest()
+
 st.title("Caesar Cipher Encryption and Decryption")
 
 text_input = st.text_input("Enter the text:")
 shift_keys_input = st.text_input("Enter the shift keys separated by space:")
+submit_button = st.button("Submit")
 
-if st.button("Encrypt"):
+if submit_button:
     try:
         shift_keys = [int(key) for key in shift_keys_input.split()]
-        enc = encrypt_decrypt(text_input, shift_keys, False)
-        st.write("Encrypted Text:", enc)
-    except ValueError as e:
-        st.error(str(e))
 
-if st.button("Decrypt"):
-    try:
-        shift_keys = [int(key) for key in shift_keys_input.split()]
-        dec = encrypt_decrypt(text_input, shift_keys, True)
-        st.write("Decrypted Text:", dec)
+        encrypted_text = encrypt_decrypt(text_input, shift_keys, False)
+        decrypted_text = encrypt_decrypt(encrypted_text, shift_keys, True)
+
+        st.write("Encrypted Text:", encrypted_text)
+        st.write("Decrypted Text:", decrypted_text)
+        
+        hashed_text = hash_text(text_input)
+        st.write("Hash of the input text:", hashed_text)
     except ValueError as e:
         st.error(str(e))
