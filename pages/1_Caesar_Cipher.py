@@ -20,8 +20,10 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
     for i, char in enumerate(text):
         shift_key = shift_keys[i % len(shift_keys)]
         
-        if 32 <= char <= 125:  # Removed ord() here
-            new_ascii = char + shift_key if not ifdecrypt else char - shift_key
+        char_ascii = ord(char)  # Convert char to ASCII value
+        
+        if 32 <= char_ascii <= 125:
+            new_ascii = char_ascii + shift_key if not ifdecrypt else char_ascii - shift_key
                 
             while new_ascii > 125:
                 new_ascii -= 94
@@ -29,10 +31,10 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
                 new_ascii += 94
                 
             result += chr(new_ascii)
-            transformations.append((chr(char), shift_key, chr(new_ascii)))  # Converted char to chr(char)
+            transformations.append((char, shift_key, chr(new_ascii)))
         else:
-            result += chr(char)  # Converted char to chr(char)
-            transformations.append((chr(char), "", chr(char)))  # Converted char to chr(char)
+            result += char
+            transformations.append((char, "", char))
     return result, transformations
 
 def file_encrypt_decrypt(file_content, shift_keys, ifdecrypt):
