@@ -52,8 +52,8 @@ st.title("Caesar Cipher File Encryption and Decryption")
 file = st.file_uploader("Upload a file")
 
 if file is not None:
-    file_content = file.getvalue().decode("latin-1")  # Update decoding here
-    st.text_area("File content", value=file_content, height=300)
+    file_content = file.getvalue()  # No need for decoding
+    st.text_area("File content", value=file_content.decode("latin-1"), height=300)
 
     text_input = st.text_input("Enter the text:")
     shift_keys_input = st.text_input("Enter the shift keys separated by space:")
@@ -68,6 +68,15 @@ if file is not None:
             if file_content:
                 result, _ = file_encrypt_decrypt(file_content, shift_keys, decrypt_checkbox)
                 st.text_area("Encrypted/Decrypted File Content", value=result, height=300)
+                
+                if decrypt_checkbox:
+                    # Download decrypted file
+                    st.download_button(
+                        label="Download Decrypted File",
+                        data=result.encode("latin-1"),
+                        file_name="decrypted_file.txt",
+                        mime="text/plain"
+                    )
             elif text_input:
                 result, _ = encrypt_decrypt(text_input, shift_keys, decrypt_checkbox)
                 st.text_area("Encrypted/Decrypted Text", value=result, height=300)
