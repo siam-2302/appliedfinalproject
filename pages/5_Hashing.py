@@ -19,7 +19,7 @@ def hash_string(text, method='md5'):
 
 # Define the Streamlit app
 def main():
-    st.title("Hashing Function App")
+    st.title("Hashing")
     st.write("Enter a string and choose a hashing method to compute its hash.")
 
     # Input box for the string to hash

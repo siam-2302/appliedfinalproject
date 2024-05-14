@@ -1,4 +1,5 @@
 import streamlit as st
+import hashlib
 from base64 import b64encode
 
 def encrypt_decrypt(text, shift_keys, ifdecrypt):
@@ -47,14 +48,13 @@ def file_encrypt_decrypt(file_content, shift_keys, ifdecrypt):
     Returns:
         A string containing the encrypted or decrypted file content.
     """
-    text_content = file_content.decode("latin-1")  # Convert bytes to string
-    return encrypt_decrypt(text_content, shift_keys, ifdecrypt)
+    return encrypt_decrypt(file_content, shift_keys, ifdecrypt)
 
 def get_binary_file_downloader_html(bin_file, file_label='File'):
     with open(bin_file, 'rb') as f:
         data = f.read()
-    bin_str = data.decode('latin-1')
-    href = f'<a href="data:application/octet-stream;base64,{b64encode(bin_str).decode()}" download="{bin_file}">{file_label}</a>'
+    bin_str = b64encode(data).decode()
+    href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{bin_file}">{file_label}</a>'
     return href
 
 st.title("Caesar Cipher File Encryption and Decryption")
@@ -91,4 +91,3 @@ if file is not None:
                 st.text_area("Encrypted/Decrypted Text", value=result, height=300)
         except ValueError as e:
             st.error(str(e))
- 
