@@ -39,14 +39,11 @@ def xor_decrypt(ciphertext, key, block_size):
         decrypted_data += decrypted_block
     return unpad(decrypted_data)
 
-def process_file(file, key, block_size, original_file_name):
-    # Read the file content
-    file_bytes = file.getvalue()
-    # Encrypt
-    encrypted_data = xor_encrypt(file_bytes, key, block_size)
-    # Decrypt
-    decrypted_data = xor_decrypt(encrypted_data, key, block_size)
-    return encrypted_data, decrypted_data, original_file_name
+def encrypt_file(file_bytes, key, block_size):
+    return xor_encrypt(file_bytes, key, block_size)
+
+def decrypt_file(file_bytes, key, block_size):
+    return xor_decrypt(file_bytes, key, block_size)
 
 def main():
     st.subheader("File Encryption")
@@ -54,23 +51,23 @@ def main():
     key = st.text_input("Enter key:")
     block_size = st.number_input("Enter block size:", value=16, min_value=8, max_value=128, step=1)
 
-    if st.button("Encrypt & Decrypt"):
+    if st.button("Encrypt"):
         if uploaded_file is not None and key:
             key_bytes = bytes(key.encode())
             key_padded = pad(key_bytes, block_size)
-            original_file_name = uploaded_file.name
-            encrypted_data, decrypted_data, original_file_name = process_file(uploaded_file, key_padded, block_size, original_file_name)
-            
-            # Determine file extension
-            file_extension = get_file_extension(original_file_name)
-            # Set file name for decrypted file with original extension
-            decrypted_file_name = "decrypted_file" + file_extension
-            
-            # Show outputs
+            encrypted_data = encrypt_file(uploaded_file.getvalue(), key_padded, block_size)
             st.download_button("Download Encrypted File", encrypted_data, file_name="encrypted_file")
-            st.download_button("Download Decrypted File", decrypted_data, file_name=decrypted_file_name)
+            st.success("Encryption successful!")
+        else:
+            st.error("Please upload a file and provide a key.")
 
-            st.success("Encryption and decryption successful!")
+    if st.button("Decrypt"):
+        if uploaded_file is not None and key:
+            key_bytes = bytes(key.encode())
+            key_padded = pad(key_bytes, block_size)
+            decrypted_data = decrypt_file(uploaded_file.getvalue(), key_padded, block_size)
+            st.download_button("Download Decrypted File", decrypted_data, file_name=uploaded_file.name)
+            st.success("Decryption successful!")
         else:
             st.error("Please upload a file and provide a key.")
 
