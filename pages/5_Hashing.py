@@ -3,17 +3,17 @@ import streamlit as st
 
 # Define the hashing function
 def hash_string(text, method='md5'):
-    if method.lower() == 'md5':
-        hash_object = hashlib.md5()
-    elif method.lower() == 'sha1':
-        hash_object = hashlib.sha1()
-    elif method.lower() == 'sha256':
-        hash_object = hashlib.sha256()
-    elif method.lower() == 'sha512':
-        hash_object = hashlib.sha512()
-    else:
-        raise ValueError("Invalid hashing method. Choose from md5, sha1, sha256, sha512.")
-    
+    methods = {
+        'MD5': hashlib.md5,
+        'SHA-1': hashlib.sha1,
+        'SHA-256': hashlib.sha256,
+        'SHA-512': hashlib.sha512
+    }
+
+    if method.upper() not in methods:
+        raise ValueError("Invalid hashing method. Choose from MD5, SHA-1, SHA-256, SHA-512.")
+
+    hash_object = methods[method.upper()]()
     hash_object.update(text.encode())
     return hash_object.hexdigest()
 
