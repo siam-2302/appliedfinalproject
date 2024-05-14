@@ -1,6 +1,5 @@
 import streamlit as st
 import hashlib
-from base64 import b64encode
 
 def encrypt_decrypt(text, shift_keys, ifdecrypt):
     """
@@ -21,7 +20,7 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
     for i, char in enumerate(text):
         shift_key = shift_keys[i % len(shift_keys)]
         
-        char_ascii = char  # Convert char to ASCII value
+        char_ascii = ord(char)  # Convert char to ASCII value
         
         if 32 <= char_ascii <= 125:
             new_ascii = char_ascii + shift_key if not ifdecrypt else char_ascii - shift_key
@@ -51,19 +50,13 @@ def file_encrypt_decrypt(file_content, shift_keys, ifdecrypt):
     text_content = file_content.decode("latin-1")  # Convert bytes to string
     return encrypt_decrypt(text_content, shift_keys, ifdecrypt)
 
-def get_binary_file_downloader_html(bin_file, file_label='File'):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    bin_str = b64encode(data).decode()
-    href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{bin_file}">{file_label}</a>'
-    return href
-
 st.title("Caesar Cipher File Encryption and Decryption")
 
 file = st.file_uploader("Upload a file")
 
 if file is not None:
     file_content = file.getvalue()  # No need for decoding
+    st.text_area("File content", value=file_content.decode("latin-1"), height=300)
 
     text_input = st.text_input("Enter the text:")
     shift_keys_input = st.text_input("Enter the shift keys separated by space:")
@@ -91,3 +84,10 @@ if file is not None:
                 st.text_area("Encrypted/Decrypted Text", value=result, height=300)
         except ValueError as e:
             st.error(str(e))
+
+def get_binary_file_downloader_html(bin_file, file_label='File'):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    bin_str = data.decode('latin-1')
+    href = f'<a href="data:application/octet-stream;base64,{b64encode(bin_str).decode()}" download="{bin_file}">{file_label}</a>'
+    return href
