@@ -35,28 +35,41 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
             transformations.append((char, "", char))
     return result, transformations
 
-st.title("Caesar Cipher")
+def file_encrypt_decrypt(file_content, shift_keys, ifdecrypt):
+    """
+    Encrypts or decrypts file content using Caesar Cipher with a list of shift keys.
+    Args:
+        file_content: The content of the file to encrypt or decrypt.
+        shift_keys: A list of integers representing the shift values for each character.
+        ifdecrypt: Flag indicating whether to decrypt or encrypt.
+    Returns:
+        A string containing the encrypted or decrypted file content.
+    """
+    return encrypt_decrypt(file_content, shift_keys, ifdecrypt)
 
-text_input = st.text_input("Enter the text:")
-shift_keys_input = st.text_input("Enter the shift keys separated by space:")
-submit_button = st.button("Submit")
+st.title("Caesar Cipher File Encryption and Decryption")
 
-if submit_button:
-    try:
-        shift_keys = [int(key) for key in shift_keys_input.split()]
+file = st.file_uploader("Upload a file")
 
-        encrypted_text, enc_transformations = encrypt_decrypt(text_input, shift_keys, False)
-        decrypted_text, dec_transformations = encrypt_decrypt(encrypted_text, shift_keys, True)
-        
-        for i, (char, shift_key, transformed_char) in enumerate(enc_transformations):
-            st.write(f"{i} {char} {shift_key} {transformed_char}")
-        st.write("----------")
-        for i, (char, shift_key, transformed_char) in enumerate(dec_transformations):
-            st.write(f"{i} {char} {shift_key} {transformed_char}")
-        
-        st.write("Text:", text_input)
-        st.write("Shift keys:", " ".join(str(key) for key in shift_keys))
-        st.write("Cipher:", encrypted_text)
-        st.write("Decrypted text:", decrypted_text)
-    except ValueError as e:
-        st.error(str(e))
+if file is not None:
+    file_content = file.getvalue().decode("utf-8")
+    st.text_area("File content", value=file_content, height=300)
+
+    text_input = st.text_input("Enter the text:")
+    shift_keys_input = st.text_input("Enter the shift keys separated by space:")
+    decrypt_checkbox = st.checkbox("Decrypt")
+
+    submit_button = st.button("Submit")
+
+    if submit_button:
+        try:
+            shift_keys = [int(key) for key in shift_keys_input.split()]
+
+            if file_content:
+                result, _ = file_encrypt_decrypt(file_content, shift_keys, decrypt_checkbox)
+                st.text_area("Encrypted/Decrypted File Content", value=result, height=300)
+            elif text_input:
+                result, _ = encrypt_decrypt(text_input, shift_keys, decrypt_checkbox)
+                st.text_area("Encrypted/Decrypted Text", value=result, height=300)
+        except ValueError as e:
+            st.error(str(e))
