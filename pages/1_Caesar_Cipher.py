@@ -21,7 +21,7 @@ def encrypt_decrypt(text, shift_keys, ifdecrypt):
     for i, char in enumerate(text):
         shift_key = shift_keys[i % len(shift_keys)]
         
-        char_ascii = ord(char)  # Convert char to ASCII value
+        char_ascii = char  # Convert char to ASCII value
         
         if 32 <= char_ascii <= 125:
             new_ascii = char_ascii + shift_key if not ifdecrypt else char_ascii - shift_key
@@ -48,7 +48,8 @@ def file_encrypt_decrypt(file_content, shift_keys, ifdecrypt):
     Returns:
         A string containing the encrypted or decrypted file content.
     """
-    return encrypt_decrypt(file_content, shift_keys, ifdecrypt)
+    text_content = file_content.decode("latin-1")  # Convert bytes to string
+    return encrypt_decrypt(text_content, shift_keys, ifdecrypt)
 
 def get_binary_file_downloader_html(bin_file, file_label='File'):
     with open(bin_file, 'rb') as f:
@@ -63,7 +64,6 @@ file = st.file_uploader("Upload a file")
 
 if file is not None:
     file_content = file.getvalue()  # No need for decoding
-    st.text_area("File content", value=file_content.decode("latin-1"), height=300)
 
     text_input = st.text_input("Enter the text:")
     shift_keys_input = st.text_input("Enter the shift keys separated by space:")
