@@ -52,7 +52,7 @@ st.title("Caesar Cipher File Encryption and Decryption")
 file = st.file_uploader("Upload a file")
 
 if file is not None:
-    file_content = file.getvalue().decode("utf-8")
+    file_content = file.getvalue().decode("latin-1")  # Update decoding here
     st.text_area("File content", value=file_content, height=300)
 
     text_input = st.text_input("Enter the text:")
