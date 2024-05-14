@@ -1,7 +1,12 @@
 import streamlit as st
 import io
+import os
 
 st.header("Block Cipher with File Encryption")
+
+def get_file_extension(file_name):
+    _, extension = os.path.splitext(file_name)
+    return extension
 
 def pad(data, block_size):
     padding_length = block_size - len(data) % block_size
@@ -34,14 +39,14 @@ def xor_decrypt(ciphertext, key, block_size):
         decrypted_data += decrypted_block
     return unpad(decrypted_data)
 
-def process_file(file, key, block_size):
+def process_file(file, key, block_size, original_file_name):
     # Read the file content
     file_bytes = file.getvalue()
     # Encrypt
     encrypted_data = xor_encrypt(file_bytes, key, block_size)
     # Decrypt
     decrypted_data = xor_decrypt(encrypted_data, key, block_size)
-    return encrypted_data, decrypted_data
+    return encrypted_data, decrypted_data, original_file_name
 
 def main():
     st.subheader("File Encryption")
@@ -53,11 +58,17 @@ def main():
         if uploaded_file is not None and key:
             key_bytes = bytes(key.encode())
             key_padded = pad(key_bytes, block_size)
-            encrypted_data, decrypted_data = process_file(uploaded_file, key_padded, block_size)
+            original_file_name = uploaded_file.name
+            encrypted_data, decrypted_data, original_file_name = process_file(uploaded_file, key_padded, block_size, original_file_name)
+            
+            # Determine file extension
+            file_extension = get_file_extension(original_file_name)
+            # Set file name for decrypted file with original extension
+            decrypted_file_name = "decrypted_file" + file_extension
             
             # Show outputs
             st.download_button("Download Encrypted File", encrypted_data, file_name="encrypted_file")
-            st.download_button("Download Decrypted File", decrypted_data, file_name="decrypted_file")
+            st.download_button("Download Decrypted File", decrypted_data, file_name=decrypted_file_name)
 
             st.success("Encryption and decryption successful!")
         else:
