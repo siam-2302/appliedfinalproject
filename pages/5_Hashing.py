@@ -1,4 +1,21 @@
+import hashlib
 import streamlit as st
+
+# Define the hashing function
+def hash_string(text, method='md5'):
+    if method.lower() == 'md5':
+        hash_object = hashlib.md5()
+    elif method.lower() == 'sha1':
+        hash_object = hashlib.sha1()
+    elif method.lower() == 'sha256':
+        hash_object = hashlib.sha256()
+    elif method.lower() == 'sha512':
+        hash_object = hashlib.sha512()
+    else:
+        raise ValueError("Invalid hashing method. Choose from md5, sha1, sha256, sha512.")
+    
+    hash_object.update(text.encode())
+    return hash_object.hexdigest()
 
 # Define the Streamlit app
 def main():
