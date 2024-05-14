@@ -113,24 +113,6 @@ def run():
         3. Output the resulting ciphertext or plaintext.
         """)
 
-    with st.expander("SHA-1"):
-        st.write("""
-        **Description:** SHA-1 (Secure Hash Algorithm 1) is a cryptographic hash function that produces a 160-bit hash value known as a message digest.
-        
-        **Pseudocode:**
-        ```
-        function sha1_hash(text):
-            # Compute SHA-1 hash value
-            return hash_value
-        ```
-        
-        **Process:**
-        1. Take the input message as a sequence of bytes.
-        2. Pad the message to ensure its length is a multiple of 512 bits.
-        3. Process the message in 512-bit blocks.
-        4. Output the resulting hash value.
-        """)
-
 
 if __name__ == "__main__":
     run()
