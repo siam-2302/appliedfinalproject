@@ -73,15 +73,21 @@ if file is not None:
                 st.text_area("Encrypted/Decrypted File Content", value=result, height=300)
                 
                 if decrypt_checkbox:
-                    # Download decrypted file
-                    st.download_button(
-                        label="Download Decrypted File",
-                        data=result.encode("latin-1"),
-                        file_name="decrypted_file.txt",
-                        mime="text/plain"
-                    )
+                    # Save decrypted file
+                    with open("decrypted_file.txt", "w") as f:
+                        f.write(result)
+                    
+                    # Provide download link
+                    st.markdown(get_binary_file_downloader_html("decrypted_file.txt", "Decrypted File"), unsafe_allow_html=True)
             elif text_input:
                 result, _ = encrypt_decrypt(text_input, shift_keys, decrypt_checkbox)
                 st.text_area("Encrypted/Decrypted Text", value=result, height=300)
         except ValueError as e:
             st.error(str(e))
+
+def get_binary_file_downloader_html(bin_file, file_label='File'):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    bin_str = data.decode('latin-1')
+    href = f'<a href="data:application/octet-stream;base64,{b64encode(bin_str).decode()}" download="{bin_file}">{file_label}</a>'
+    return href
