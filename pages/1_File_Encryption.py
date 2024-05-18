@@ -26,24 +26,7 @@ def decrypt_file(encrypted_data, cipher_suite):
 def main():
     st.title("Symmetric Encryption and Decryption App")
 
-    # Sidebar for key management
-    st.sidebar.header("Key Management")
-    if "key" not in st.session_state:
-        st.session_state.key = None
 
-    if st.session_state.key is None:
-        if st.sidebar.button("Generate Key"):
-            key, cipher_suite = generate_key()
-            st.session_state.key = key
-            st.session_state.cipher_suite = cipher_suite
-            st.sidebar.success("Key generated successfully!")
-            st.sidebar.write(f"Key: {key.decode()}")
-    else:
-        st.sidebar.write(f"Key: {st.session_state.key.decode()}")
-        st.session_state.cipher_suite = Fernet(st.session_state.key)
-        if st.sidebar.button("Delete Key"):
-            st.session_state.key = None
-            st.sidebar.success("Key deleted successfully!")
 
     st.header("Text Encryption and Decryption")
 
