@@ -30,24 +30,6 @@ def main():
 
     st.header("Text Encryption and Decryption")
 
-    text_input = st.text_area("Enter text to encrypt/decrypt:")
-
-    if text_input:
-        if st.button("Encrypt Text"):
-            encrypted_text = encrypt_text(text_input, st.session_state.cipher_suite)
-            st.success("Text encrypted successfully!")
-            st.text_area("Encrypted Text", encrypted_text.decode())
-
-        encrypted_text_input = st.text_area("Enter text to decrypt:")
-
-        if st.button("Decrypt Text"):
-            try:
-                decrypted_text = decrypt_text(encrypted_text_input.encode(), st.session_state.cipher_suite)
-                st.success("Text decrypted successfully!")
-                st.text_area("Decrypted Text", decrypted_text)
-            except Exception as e:
-                st.error(f"An error occurred during decryption: {str(e)}")
-
     st.header("File Encryption and Decryption")
 
     uploaded_file = st.file_uploader("Choose a file to encrypt", type=None)
