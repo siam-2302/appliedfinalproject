@@ -26,6 +26,10 @@ def decrypt_file(encrypted_data, cipher_suite):
 def main():
     st.title("File Encryption and Decryption App")
 
+    # Initialize cipher_suite in session state if not already initialized
+    if 'cipher_suite' not in st.session_state:
+        key, cipher_suite = generate_key()
+        st.session_state.cipher_suite = cipher_suite
 
     st.header("File Encryption and Decryption")
 
