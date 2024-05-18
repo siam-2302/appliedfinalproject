@@ -27,9 +27,6 @@ def main():
     st.title("Symmetric Encryption and Decryption App")
 
 
-
-    st.header("Text Encryption and Decryption")
-
     st.header("File Encryption and Decryption")
 
     uploaded_file = st.file_uploader("Choose a file to encrypt", type=None)

@@ -6,7 +6,7 @@ LOGGER = get_logger(__name__)
 
 def run():
     st.set_page_config(
-        page_title="Cryptographic Algorithms",
+        page_title="Final Project in Applied Cryptography",
         page_icon="🔒",
     )
 
@@ -34,40 +34,38 @@ def run():
         3. Output the resulting ciphertext.
         """)
 
-    with st.expander("Caesar Cipher"):
+    with st.expander("Symmetric Encryption and Decryption"):
         st.write("""
-        **Description:** The Caesar cipher is a simple encryption method where each letter in the plaintext is shifted by a fixed number of places down the alphabet.
+        **Description:** This application allows you to encrypt and decrypt files using symmetric encryption. 
+        You can upload a file to encrypt it and then download the encrypted version. 
+        Similarly, you can upload an encrypted file to decrypt it back to its original form.
         
         **Pseudocode:**
         ```
-        function caesar_encrypt_decrypt(text, shift_keys, ifdecrypt):
-            result = ""
-            transformations = []
-            
-            for i, char in enumerate(text):
-                shift_key = shift_keys[i % len(shift_keys)]
-                
-                if 32 <= ord(char) <= 125:
-                    new_ascii = ord(char) + shift_key if not ifdecrypt else ord(char) - shift_key
-                        
-                    while new_ascii > 125:
-                        new_ascii -= 94
-                    while new_ascii < 32:
-                        new_ascii += 94
-                        
-                    result += chr(new_ascii)
-                    transformations.append((char, shift_key, chr(new_ascii)))
-                else:
-                    result += char
-                    transformations.append((char, "", char))
-            return result, transformations
+        1. Generate a key and create a cipher suite
+            key, cipher_suite = generate_key()
+        
+        2. Encrypt a file
+            a. Read the file data
+            b. Encrypt the file data using the cipher suite
+            c. Provide an option to download the encrypted file
+        
+        3. Decrypt a file
+            a. Read the encrypted file data
+            b. Decrypt the file data using the cipher suite
+            c. Provide an option to download the decrypted file
         ```
         
         **Process:**
-        1. Take the plaintext and a shift key as input.
-        2. Shift each letter in the plaintext by the specified number of places.
-        3. Output the resulting ciphertext.
+        1. **Upload a File to Encrypt**: Select a file from your device to encrypt.
+        2. **Encrypt the File**: Click the "Encrypt File" button to encrypt the uploaded file. 
+           You will be able to download the encrypted file.
+        3. **Upload an Encrypted File to Decrypt**: Select an encrypted file (with `.enc` extension) 
+           from your device to decrypt.
+        4. **Decrypt the File**: Click the "Decrypt File" button to decrypt the uploaded file. 
+           You will be able to download the decrypted file.
         """)
+
 
     with st.expander("Primitive Root"):
         st.write("""
@@ -111,6 +109,35 @@ def run():
         1. Divide the plaintext into fixed-size blocks.
         2. Apply encryption or decryption operation to each block using a specified key.
         3. Output the resulting ciphertext or plaintext.
+        """)
+
+with st.expander("Hashing"):
+        st.write("""
+        **Description:** Hashing is a process of converting an input (or 'message') into a fixed-size string of bytes, typically a digest that is unique to each unique input. Hashing is used in various applications, including data integrity verification and cryptographic algorithms.
+        
+        **Pseudocode:**
+        ```
+        function hash_string(text, method):
+            methods = {
+                'MD5': hashlib.md5,
+                'SHA-1': hashlib.sha1,
+                'SHA-256': hashlib.sha256,
+                'SHA-512': hashlib.sha512
+            }
+
+            if method.upper() not in methods:
+                raise ValueError("Invalid hashing method. Choose from MD5, SHA-1, SHA-256, SHA-512.")
+
+            hash_object = methods[method.upper()]()
+            hash_object.update(text.encode())
+            return hash_object.hexdigest()
+        ```
+        
+        **Process:**
+        1. Enter a string to be hashed.
+        2. Select the hashing algorithm (e.g., MD5, SHA-1, SHA-256, SHA-512).
+        3. Compute the hash of the entered string using the selected algorithm.
+        4. Display the resulting hash.
         """)
 
 
