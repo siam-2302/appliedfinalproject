@@ -71,39 +71,36 @@ def run():
         3. Output the resulting ciphertext.
         """)
 
-    with st.expander("Caesar Cipher"):
+    with st.expander("Symmetric Encryption and Decryption"):
         st.write("""
-        **Description:** The Caesar cipher is a simple encryption method where each letter in the plaintext is shifted by a fixed number of places down the alphabet.
+        **Description:** This application allows you to encrypt and decrypt files using symmetric encryption. 
+        You can upload a file to encrypt it and then download the encrypted version. 
+        Similarly, you can upload an encrypted file to decrypt it back to its original form.
         
         **Pseudocode:**
         ```
-        function caesar_encrypt_decrypt(text, shift_keys, ifdecrypt):
-            result = ""
-            transformations = []
-            
-            for i, char in enumerate(text):
-                shift_key = shift_keys[i % len(shift_keys)]
-                
-                if 32 <= ord(char) <= 125:
-                    new_ascii = ord(char) + shift_key if not ifdecrypt else ord(char) - shift_key
-                        
-                    while new_ascii > 125:
-                        new_ascii -= 94
-                    while new_ascii < 32:
-                        new_ascii += 94
-                        
-                    result += chr(new_ascii)
-                    transformations.append((char, shift_key, chr(new_ascii)))
-                else:
-                    result += char
-                    transformations.append((char, "", char))
-            return result, transformations
+        1. Generate a key and create a cipher suite
+            key, cipher_suite = generate_key()
+        
+        2. Encrypt a file
+            a. Read the file data
+            b. Encrypt the file data using the cipher suite
+            c. Provide an option to download the encrypted file
+        
+        3. Decrypt a file
+            a. Read the encrypted file data
+            b. Decrypt the file data using the cipher suite
+            c. Provide an option to download the decrypted file
         ```
         
         **Process:**
-        1. Take the plaintext and a shift key as input.
-        2. Shift each letter in the plaintext by the specified number of places.
-        3. Output the resulting ciphertext.
+        1. **Upload a File to Encrypt**: Select a file from your device to encrypt.
+        2. **Encrypt the File**: Click the "Encrypt File" button to encrypt the uploaded file. 
+           You will be able to download the encrypted file.
+        3. **Upload an Encrypted File to Decrypt**: Select an encrypted file (with `.enc` extension) 
+           from your device to decrypt.
+        4. **Decrypt the File**: Click the "Decrypt File" button to decrypt the uploaded file. 
+           You will be able to download the decrypted file.
         """)
 
     with st.expander("Primitive Root"):
@@ -150,74 +147,6 @@ def run():
         3. Output the resulting ciphertext or plaintext.
         """)
 
-    with st.expander("Symmetric Encryption and Decryption"):
-        st.write("""
-        **Description:** This application allows you to encrypt and decrypt files using symmetric encryption. 
-        You can upload a file to encrypt it and then download the encrypted version. 
-        Similarly, you can upload an encrypted file to decrypt it back to its original form.
-        
-        **Pseudocode:**
-        ```
-        1. Generate a key and create a cipher suite
-            key, cipher_suite = generate_key()
-        
-        2. Encrypt a file
-            a. Read the file data
-            b. Encrypt the file data using the cipher suite
-            c. Provide an option to download the encrypted file
-        
-        3. Decrypt a file
-            a. Read the encrypted file data
-            b. Decrypt the file data using the cipher suite
-            c. Provide an option to download the decrypted file
-        ```
-        
-        **Process:**
-        1. **Upload a File to Encrypt**: Select a file from your device to encrypt.
-        2. **Encrypt the File**: Click the "Encrypt File" button to encrypt the uploaded file. 
-           You will be able to download the encrypted file.
-        3. **Upload an Encrypted File to Decrypt**: Select an encrypted file (with `.enc` extension) 
-           from your device to decrypt.
-        4. **Decrypt the File**: Click the "Decrypt File" button to decrypt the uploaded file. 
-           You will be able to download the decrypted file.
-        """)
-
-        st.header("File Encryption and Decryption")
-
-        # Initialize cipher suite in session state
-        if 'cipher_suite' not in st.session_state:
-            key, st.session_state.cipher_suite = generate_key()
-
-        uploaded_file = st.file_uploader("Choose a file to encrypt", type=None)
-
-        if uploaded_file:
-            file_data = uploaded_file.read()
-            if st.button("Encrypt File"):
-                encrypted_data = encrypt_file(file_data, st.session_state.cipher_suite)
-                st.success("File encrypted successfully!")
-                st.download_button(
-                    label="Download Encrypted File",
-                    data=encrypted_data,
-                    file_name=f"{uploaded_file.name}.enc",
-                    mime="application/octet-stream"
-                )
-
-        encrypted_file = st.file_uploader("Choose an encrypted file to decrypt", type=["enc"])
-
-        if encrypted_file:
-            encrypted_file_data = encrypted_file.read()
-            if st.button("Decrypt File"):
-                try:
-                    decrypted_data = decrypt_file(encrypted_file_data, st.session_state.cipher_suite)
-                    st.success("File decrypted successfully!")
-                    st.download_button(
-                        label="Download Decrypted File",
-                        data=decrypted_data,
-                        file_name=encrypted_file.name.replace(".enc", ""),
-                        mime="application/octet-stream"
-                    )
-                except Exception as e:
-                    st.error(f"An error occurred during decryption: {str(e)}")
 
     with st.expander("Hashing"):
         st.write("""
@@ -248,21 +177,6 @@ def run():
         4. Display the resulting hash.
         """)
 
-        st.header("Hashing")
-
-        # Input box for the string to hash
-        input_string = st.text_input("Enter a string:")
-
-        # Select box for the hashing method
-        hash_method = st.selectbox("Select a hashing method:", ['MD5', 'SHA-1', 'SHA-256', 'SHA-512'])
-
-        # Compute the hash when the button is clicked
-        if st.button("Hash"):
-            if input_string:
-                hashed_text = hash_string(input_string, method=hash_method)
-                st.success(f"The {hash_method} hash of '{input_string}' is: {hashed_text}")
-            else:
-                st.error("Please enter a string.")
 
 if __name__ == "__main__":
     run()
