@@ -24,7 +24,7 @@ def decrypt_file(encrypted_data, cipher_suite):
 
 # Define the Streamlit app
 def main():
-    st.title("Symmetric Encryption and Decryption App")
+    st.title("File Encryption and Decryption App")
 
 
     st.header("File Encryption and Decryption")

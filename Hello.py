@@ -71,7 +71,7 @@ def run():
         3. Output the resulting ciphertext.
         """)
 
-    with st.expander("Symmetric Encryption and Decryption"):
+    with st.expander("File Encryption and Decryption"):
         st.write("""
         **Description:** This application allows you to encrypt and decrypt files using symmetric encryption. 
         You can upload a file to encrypt it and then download the encrypted version. 
